@@ -4,9 +4,12 @@ Version: 0.0.0.9000
 Authors@R: 
     person("Teal", "Emery", , "lte@tealinsights.com", role = c("aut", "cre"))
 Description: What the package does (one paragraph).
-License: MIT + file LICENSE
+License: CC0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
-URL: https://github.com/t-emery/chinadevfin2
+URL: https://github.com/t-emery/chinadevfin2, https://t-emery.github.io/chinadevfin2/
 BugReports: https://github.com/t-emery/chinadevfin2/issues
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
