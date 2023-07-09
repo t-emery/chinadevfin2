@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# chinadevfin2
+# chinadevfin2 <a href="https://t-emery.github.io/chinadevfin2/"><img src="man/figures/logo.png" align="right" height="139" alt="chinadevfin2 website" /></a>
 
 <!-- badges: start -->
 <!-- badges: end -->
