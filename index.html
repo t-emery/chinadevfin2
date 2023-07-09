@@ -100,7 +100,7 @@
 <li>
 <strong><code>chinadevfin2</code> is still under heavy development</strong>: Please use accordingly. The initial phase of package development aims to finalize stable versions of the datasets, and will be announced with a new package version release and note. Further development will focus on building helper functions to aid efficient analysis workflows with the dataset.</li>
 <li>
-<strong><code>chinadevfin2</code> is a personal project</strong>: While the package author works as a <a href="https://www.linkedin.com/feed/update/urn:li:activity:7067478837885849600/" class="external-link">consultant to AidData</a> this package is a personal project with no official affiliation or sponsorship from AidData. The author build the package for his own own use, but hopes that it can grow into a robust package that can aid researchers, policymakers, and others interested in gaining actionable, empirically-based insights about Chinese development finance lending using the GCDF2 dataset.</li>
+<strong><code>chinadevfin2</code> is a personal project</strong>: While the package author works as a <a href="https://www.linkedin.com/feed/update/urn:li:activity:7067478837885849600/" class="external-link">consultant to AidData</a> this package is a personal project with no official affiliation or sponsorship from AidData. The author build the package for his own own use, but hopes that it can grow into a robust package that can aid researchers, policymakers, and others interested in gaining actionable, empirically-based insights about Chinese development finance lending using the GCDF 2.0 dataset.</li>
 </ol>
 </div>
 <div class="section level2">
@@ -118,27 +118,51 @@
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p><strong>UNDER DEVELOPMENT</strong></p>
-<p>The core initial functionality of <code>chinadevfin2</code> is to load the GCDF2 dataset:</p>
+<p>The core initial functionality of <code>chinadevfin2</code> is to load the GCDF 2.0 dataset as a <code>tibble</code> using <code>gcdf2_dataset</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#library(chinadevfin2)</span></span>
-<span><span class="co">#library(tibble)</span></span>
-<span><span class="co">## basic example code</span></span>
-<span><span class="co">#gcdf2_dataset</span></span></code></pre></div>
-<p>What is special about using <code>README.Rmd</code> instead of just <code>README.md</code>? You can include R chunks like so:</p>
+<code class="sourceCode R"><span><span class="co"># load the chinadevfin2 library</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/t-emery/chinadevfin2" class="external-link">chinadevfin2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Load the GCDF 2.0 dataset as a tibble</span></span>
+<span><span class="va">gcdf2_dataset</span></span>
+<span><span class="co">#&gt; # A tibble: 13,427 × 70</span></span>
+<span><span class="co">#&gt;    aid_data_tuff_project_id recommended_for_aggrega…¹ umbrella financier_country</span></span>
+<span><span class="co">#&gt;                       &lt;dbl&gt; &lt;chr&gt;                     &lt;chr&gt;    &lt;chr&gt;            </span></span>
+<span><span class="co">#&gt;  1                    53631 Yes                       No       China (People's …</span></span>
+<span><span class="co">#&gt;  2                    53632 Yes                       No       China (People's …</span></span>
+<span><span class="co">#&gt;  3                    53633 Yes                       No       China (People's …</span></span>
+<span><span class="co">#&gt;  4                    53634 Yes                       No       China (People's …</span></span>
+<span><span class="co">#&gt;  5                    53636 Yes                       No       China (People's …</span></span>
+<span><span class="co">#&gt;  6                    53637 Yes                       No       China (People's …</span></span>
+<span><span class="co">#&gt;  7                    53644 Yes                       No       China (People's …</span></span>
+<span><span class="co">#&gt;  8                    53999 Yes                       No       China (People's …</span></span>
+<span><span class="co">#&gt;  9                    54396 No                        No       China (People's …</span></span>
+<span><span class="co">#&gt; 10                    56587 Yes                       No       China (People's …</span></span>
+<span><span class="co">#&gt; # ℹ 13,417 more rows</span></span>
+<span><span class="co">#&gt; # ℹ abbreviated name: ¹​recommended_for_aggregates</span></span>
+<span><span class="co">#&gt; # ℹ 66 more variables: recipient &lt;chr&gt;, recipient_region &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   commitment_year &lt;dbl&gt;, commitment_year_estimated &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   implementation_start_year &lt;dbl&gt;, completion_year &lt;dbl&gt;, title &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   description &lt;chr&gt;, staff_comments &lt;chr&gt;, status &lt;chr&gt;, intent &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   flow_type &lt;chr&gt;, concessional &lt;chr&gt;, flow_class &lt;chr&gt;, sector_code &lt;dbl&gt;, …</span></span></code></pre></div>
+<p><code>gcdf2_data_dictionary</code> contains AidData’s detailed data definitions for all 70 columns of the GCDF 2.0:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cars</span><span class="op">)</span></span>
-<span><span class="co">#&gt;      speed           dist       </span></span>
-<span><span class="co">#&gt;  Min.   : 4.0   Min.   :  2.00  </span></span>
-<span><span class="co">#&gt;  1st Qu.:12.0   1st Qu.: 26.00  </span></span>
-<span><span class="co">#&gt;  Median :15.0   Median : 36.00  </span></span>
-<span><span class="co">#&gt;  Mean   :15.4   Mean   : 42.98  </span></span>
-<span><span class="co">#&gt;  3rd Qu.:19.0   3rd Qu.: 56.00  </span></span>
-<span><span class="co">#&gt;  Max.   :25.0   Max.   :120.00</span></span></code></pre></div>
-<p>You’ll still need to render <code>README.Rmd</code> regularly, to keep <code>README.md</code> up-to-date. <code>devtools::build_readme()</code> is handy for this.</p>
-<p>You can also embed plots, for example:</p>
-<p><img src="reference/figures/README-pressure-1.png" width="100%"></p>
-<p>In that case, don’t forget to commit and push the resulting figure files, so they display on GitHub and CRAN.</p>
+<code class="sourceCode R"><span><span class="co"># Load the GCDF 2.0 data dictionary as a tibble</span></span>
+<span><span class="va">gcdf2_data_dictionary</span></span>
+<span><span class="co">#&gt; # A tibble: 70 × 2</span></span>
+<span><span class="co">#&gt;    field_name                 description                                       </span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;                      &lt;chr&gt;                                             </span></span>
+<span><span class="co">#&gt;  1 AidData TUFF Project ID    "This field provides the unique identification nu…</span></span>
+<span><span class="co">#&gt;  2 Recommended For Aggregates "This field identifies projects that AidData reco…</span></span>
+<span><span class="co">#&gt;  3 Umbrella                   "This field identifies projects as \"umbrella\" a…</span></span>
+<span><span class="co">#&gt;  4 Financier Country          "This field captures the country from which the o…</span></span>
+<span><span class="co">#&gt;  5 Recipient                  "This field captures the country from which the e…</span></span>
+<span><span class="co">#&gt;  6 Recipient Region           "This field captures the geographical region to w…</span></span>
+<span><span class="co">#&gt;  7 Commitment Year            "This field captures the year in which an officia…</span></span>
+<span><span class="co">#&gt;  8 Commitment Year Estimated  "For projects with a status designation of Pipeli…</span></span>
+<span><span class="co">#&gt;  9 Implementation Start Year  "This field captures the year in which a project …</span></span>
+<span><span class="co">#&gt; 10 Completion Year            "This field captures the year in which a project …</span></span>
+<span><span class="co">#&gt; # ℹ 60 more rows</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
