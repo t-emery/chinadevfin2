@@ -72,22 +72,59 @@
 </div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p>The goal of chinadevfin2 is to …</p>
+<p><code>chinadevfin2</code> is primarily a data package enabling an efficient method for working with <a href="https://www.aiddata.org/" class="external-link">AidData’s</a> <a href="https://www.aiddata.org/data/aiddatas-global-chinese-development-finance-dataset-version-2-0" class="external-link">Global Chinese Development Finance Dataset, Version 2.0</a> (GCDF 2.0) in R.</p>
+<div class="section level3">
+<h3 id="about-the-gcdf-20-dataset">About the GCDF 2.0 dataset:<a class="anchor" aria-label="anchor" href="#about-the-gcdf-20-dataset"></a>
+</h3>
+<p><a href="https://www.aiddata.org/data/aiddatas-global-chinese-development-finance-dataset-version-2-0" class="external-link">AidData’s</a> summary of the dataset:</p>
+<blockquote>
+<p>AidData’s Global Chinese Development Finance Dataset, Version 2.0. records the known universe of projects (with development, commercial, or representational intent) supported by official financial and in-kind commitments (or pledges) from China from 2000-2017, with implementation details covering a 22-year period (2000-2021). The dataset captures 13,427 projects worth $843 billion financed by more than 300 Chinese government institutions and state-owned entities across 165 countries in every major region of the world. AidData systematically collected and quality-assured all projects in the dataset using the <a href="https://www.aiddata.org/publications/aiddata-tuff-methodology-version-2-0" class="external-link">2.0 version of our Tracking Underreported Financial Flows (TUFF) methodology</a>.</p>
+</blockquote>
+<p>Please see the <a href="https://www.aiddata.org/data/aiddatas-global-chinese-development-finance-dataset-version-2-0" class="external-link">AidData’s</a> dataset website for full citation details.</p>
+<p>If you are unfamiliar with the dataset, the following resources are a great place to start:</p>
+<ul>
+<li>
+<strong>AidData - Policy Report</strong>: <a href="https://www.aiddata.org/publications/banking-on-the-belt-and-road" class="external-link">Banking on the Belt and Road: Insights from a new global dataset of 13,427 Chinese development projects</a>
+</li>
+<li>
+<strong>AidData - Methodology</strong>: <a href="https://www.aiddata.org/publications/aiddata-tuff-methodology-version-2-0" class="external-link">Tracking Underreported Financial Flows (TUFF) methodology, 2.0</a>.</li>
+<li>
+<strong>AidData - Dataset Website</strong>: <a href="https://www.aiddata.org/data/aiddatas-global-chinese-development-finance-dataset-version-2-0" class="external-link">Global Chinese Development Finance Dataset, Version 2.0</a>
+</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="relevant-notes">Relevant Notes<a class="anchor" aria-label="anchor" href="#relevant-notes"></a>
+</h3>
+<ol style="list-style-type: decimal">
+<li>
+<strong><code>chinadevfin2</code> is still under heavy development</strong>: Please use accordingly. The initial phase of package development aims to finalize stable versions of the datasets, and will be announced with a new package version release and note. Further development will focus on building helper functions to aid efficient analysis workflows with the dataset.</li>
+<li>
+<strong><code>chinadevfin2</code> is a personal project</strong>: While the package author works as a <a href="https://www.linkedin.com/feed/update/urn:li:activity:7067478837885849600/" class="external-link">consultant to AidData</a> this package is a personal project with no official affiliation or sponsorship from AidData. The author build the package for his own own use, but hopes that it can grow into a robust package that can aid researchers, policymakers, and others interested in gaining actionable, empirically-based insights about Chinese development finance lending using the GCDF2 dataset.</li>
+</ol>
+</div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>You can install the development version of chinadevfin2 from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="co">#devtools::install_github("t-emery/chinadevfin2")</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install the `devtools` package if not yet installed</span></span>
+<span><span class="co"># install.packages("devtools")</span></span>
+<span></span>
+<span><span class="co"># install chinadevfin2 from GitHub</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"t-emery/chinadevfin2"</span><span class="op">)</span></span></code></pre></div>
+<p>This package will likely never be published on <a href="https://cran.r-project.org/" class="external-link">CRAN</a> because the data file sizes are too big.</p>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>This is a basic example which shows you how to solve a common problem:</p>
+<p><strong>UNDER DEVELOPMENT</strong></p>
+<p>The core initial functionality of <code>chinadevfin2</code> is to load the GCDF2 dataset:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#library(chinadevfin2)</span></span>
-<span><span class="co">## basic example code</span></span></code></pre></div>
+<span><span class="co">#library(tibble)</span></span>
+<span><span class="co">## basic example code</span></span>
+<span><span class="co">#gcdf2_dataset</span></span></code></pre></div>
 <p>What is special about using <code>README.Rmd</code> instead of just <code>README.md</code>? You can include R chunks like so:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cars</span><span class="op">)</span></span>
