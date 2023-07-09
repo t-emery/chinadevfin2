@@ -20,24 +20,54 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of chinadevfin2 is to ...
+`chinadevfin2` is primarily a data package enabling an efficient method for working with [AidData's](https://www.aiddata.org/) [Global Chinese Development Finance Dataset, Version 2.0](https://www.aiddata.org/data/aiddatas-global-chinese-development-finance-dataset-version-2-0) (GCDF 2.0) in R. 
+
+### About the GCDF 2.0 dataset:
+
+[AidData's](https://www.aiddata.org/data/aiddatas-global-chinese-development-finance-dataset-version-2-0) summary of the dataset:
+
+> AidData’s Global Chinese Development Finance Dataset, Version 2.0. records the known universe of projects (with development, commercial, or representational intent) supported by official financial and in-kind commitments (or pledges) from China from 2000-2017, with implementation details covering a 22-year period (2000-2021). The dataset captures 13,427 projects worth $843 billion financed by more than 300 Chinese government institutions and state-owned entities across 165 countries in every major region of the world. AidData systematically collected and quality-assured all projects in the dataset using the [2.0 version of our Tracking Underreported Financial Flows (TUFF) methodology](https://www.aiddata.org/publications/aiddata-tuff-methodology-version-2-0).
+
+Please see the [AidData's](https://www.aiddata.org/data/aiddatas-global-chinese-development-finance-dataset-version-2-0) dataset website for full citation details.   
+
+If you are unfamiliar with the dataset, the following resources are a great place to start:
+
+* **AidData - Policy Report**: [Banking on the Belt and Road: Insights from a new global dataset of 13,427 Chinese development projects](https://www.aiddata.org/publications/banking-on-the-belt-and-road)
+* **AidData - Methodology**: [Tracking Underreported Financial Flows (TUFF) methodology, 2.0](https://www.aiddata.org/publications/aiddata-tuff-methodology-version-2-0).
+* **AidData - Dataset Website**: [Global Chinese Development Finance Dataset, Version 2.0](https://www.aiddata.org/data/aiddatas-global-chinese-development-finance-dataset-version-2-0) 
+
+### Relevant Notes
+
+1. **`chinadevfin2` is still under heavy development**: Please use accordingly. The initial phase of package development aims to finalize stable versions of the datasets, and will be announced with a new package version release and note. Further development will focus on building helper functions to aid efficient analysis workflows with the dataset. 
+2. **`chinadevfin2` is a personal project**:  While the package author works as a [consultant to AidData](https://www.linkedin.com/feed/update/urn:li:activity:7067478837885849600/) this package is a personal project with no official affiliation or sponsorship from AidData. The author build the package for his own own use, but hopes that it can grow into a robust package that can aid researchers, policymakers, and others interested in gaining actionable, empirically-based insights about Chinese development finance lending using the GCDF2 dataset. 
+
+
 
 ## Installation
 
 You can install the development version of chinadevfin2 from [GitHub](https://github.com/) with:
 
 ``` r
+# install the `devtools` package if not yet installed
 # install.packages("devtools")
-#devtools::install_github("t-emery/chinadevfin2")
+
+# install chinadevfin2 from GitHub
+devtools::install_github("t-emery/chinadevfin2")
 ```
+
+This package will likely never be published on [CRAN](https://cran.r-project.org/) because the data file sizes are too big.
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+**UNDER DEVELOPMENT**
+
+The core initial functionality of `chinadevfin2` is to load the GCDF2 dataset:
 
 ```{r example}
 #library(chinadevfin2)
+#library(tibble)
 ## basic example code
+#gcdf2_dataset
 ```
 
 What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
