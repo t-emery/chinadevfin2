@@ -39,7 +39,7 @@ If you are unfamiliar with the dataset, the following resources are a great plac
 ### Relevant Notes
 
 1. **`chinadevfin2` is still under heavy development**: Please use accordingly. The initial phase of package development aims to finalize stable versions of the datasets, and will be announced with a new package version release and note. Further development will focus on building helper functions to aid efficient analysis workflows with the dataset. 
-2. **`chinadevfin2` is a personal project**:  While the package author works as a [consultant to AidData](https://www.linkedin.com/feed/update/urn:li:activity:7067478837885849600/) this package is a personal project with no official affiliation or sponsorship from AidData. The author build the package for his own own use, but hopes that it can grow into a robust package that can aid researchers, policymakers, and others interested in gaining actionable, empirically-based insights about Chinese development finance lending using the GCDF2 dataset. 
+2. **`chinadevfin2` is a personal project**:  While the package author works as a [consultant to AidData](https://www.linkedin.com/feed/update/urn:li:activity:7067478837885849600/) this package is a personal project with no official affiliation or sponsorship from AidData. The author build the package for his own own use, but hopes that it can grow into a robust package that can aid researchers, policymakers, and others interested in gaining actionable, empirically-based insights about Chinese development finance lending using the GCDF 2.0 dataset. 
 
 
 
@@ -59,29 +59,23 @@ This package will likely never be published on [CRAN](https://cran.r-project.org
 
 ## Example
 
-**UNDER DEVELOPMENT**
 
-The core initial functionality of `chinadevfin2` is to load the GCDF2 dataset:
+The core initial functionality of `chinadevfin2` is to load the GCDF 2.0 dataset as a `tibble` using `gcdf2_dataset`:
 
 ```{r example}
-#library(chinadevfin2)
-#library(tibble)
-## basic example code
-#gcdf2_dataset
+# load the chinadevfin2 library
+library(chinadevfin2)
+
+# Load the GCDF 2.0 dataset as a tibble
+gcdf2_dataset
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+`gcdf2_data_dictionary` contains AidData's detailed data definitions for all 70 columns of the GCDF 2.0:
 
-```{r cars}
-summary(cars)
+```{r example 2}
+# Load the GCDF 2.0 data dictionary as a tibble
+gcdf2_data_dictionary
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
 
-You can also embed plots, for example:
 
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.

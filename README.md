@@ -63,7 +63,7 @@ great place to start:
     own use, but hopes that it can grow into a robust package that can
     aid researchers, policymakers, and others interested in gaining
     actionable, empirically-based insights about Chinese development
-    finance lending using the GCDF2 dataset.
+    finance lending using the GCDF 2.0 dataset.
 
 ## Installation
 
@@ -84,38 +84,55 @@ big.
 
 ## Example
 
-**UNDER DEVELOPMENT**
-
-The core initial functionality of `chinadevfin2` is to load the GCDF2
-dataset:
+The core initial functionality of `chinadevfin2` is to load the GCDF 2.0
+dataset as a `tibble` using `gcdf2_dataset`:
 
 ``` r
-#library(chinadevfin2)
-#library(tibble)
-## basic example code
-#gcdf2_dataset
+# load the chinadevfin2 library
+library(chinadevfin2)
+
+# Load the GCDF 2.0 dataset as a tibble
+gcdf2_dataset
+#> # A tibble: 13,427 × 70
+#>    aid_data_tuff_project_id recommended_for_aggrega…¹ umbrella financier_country
+#>                       <dbl> <chr>                     <chr>    <chr>            
+#>  1                    53631 Yes                       No       China (People's …
+#>  2                    53632 Yes                       No       China (People's …
+#>  3                    53633 Yes                       No       China (People's …
+#>  4                    53634 Yes                       No       China (People's …
+#>  5                    53636 Yes                       No       China (People's …
+#>  6                    53637 Yes                       No       China (People's …
+#>  7                    53644 Yes                       No       China (People's …
+#>  8                    53999 Yes                       No       China (People's …
+#>  9                    54396 No                        No       China (People's …
+#> 10                    56587 Yes                       No       China (People's …
+#> # ℹ 13,417 more rows
+#> # ℹ abbreviated name: ¹​recommended_for_aggregates
+#> # ℹ 66 more variables: recipient <chr>, recipient_region <chr>,
+#> #   commitment_year <dbl>, commitment_year_estimated <chr>,
+#> #   implementation_start_year <dbl>, completion_year <dbl>, title <chr>,
+#> #   description <chr>, staff_comments <chr>, status <chr>, intent <chr>,
+#> #   flow_type <chr>, concessional <chr>, flow_class <chr>, sector_code <dbl>, …
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+`gcdf2_data_dictionary` contains AidData’s detailed data definitions for
+all 70 columns of the GCDF 2.0:
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+# Load the GCDF 2.0 data dictionary as a tibble
+gcdf2_data_dictionary
+#> # A tibble: 70 × 2
+#>    field_name                 description                                       
+#>    <chr>                      <chr>                                             
+#>  1 AidData TUFF Project ID    "This field provides the unique identification nu…
+#>  2 Recommended For Aggregates "This field identifies projects that AidData reco…
+#>  3 Umbrella                   "This field identifies projects as \"umbrella\" a…
+#>  4 Financier Country          "This field captures the country from which the o…
+#>  5 Recipient                  "This field captures the country from which the e…
+#>  6 Recipient Region           "This field captures the geographical region to w…
+#>  7 Commitment Year            "This field captures the year in which an officia…
+#>  8 Commitment Year Estimated  "For projects with a status designation of Pipeli…
+#>  9 Implementation Start Year  "This field captures the year in which a project …
+#> 10 Completion Year            "This field captures the year in which a project …
+#> # ℹ 60 more rows
 ```
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
