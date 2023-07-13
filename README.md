@@ -85,30 +85,41 @@ big.
 ## Example
 
 The core initial functionality of `chinadevfin2` is to load the GCDF 2.0
-dataset as a `tibble` using `gcdf2_dataset`:
+dataset as a `tibble` using `get_gcdf2_dataset()`:
 
 ``` r
 # load the chinadevfin2 library
 library(chinadevfin2)
+library(tidyverse)
+#> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+#> ✔ dplyr     1.1.2     ✔ readr     2.1.4
+#> ✔ forcats   1.0.0     ✔ stringr   1.5.0
+#> ✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+#> ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+#> ✔ purrr     1.0.1     
+#> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+#> ✖ dplyr::filter() masks stats::filter()
+#> ✖ dplyr::lag()    masks stats::lag()
+#> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 
-# Load the GCDF 2.0 dataset as a tibble
-gcdf2_dataset
-#> # A tibble: 13,427 × 70
-#>    aid_data_tuff_project_id recommended_for_aggrega…¹ umbrella financier_country
-#>                       <dbl> <chr>                     <chr>    <chr>            
-#>  1                    53631 Yes                       No       China (People's …
-#>  2                    53632 Yes                       No       China (People's …
-#>  3                    53633 Yes                       No       China (People's …
-#>  4                    53634 Yes                       No       China (People's …
-#>  5                    53636 Yes                       No       China (People's …
-#>  6                    53637 Yes                       No       China (People's …
-#>  7                    53644 Yes                       No       China (People's …
-#>  8                    53999 Yes                       No       China (People's …
-#>  9                    54396 No                        No       China (People's …
-#> 10                    56587 Yes                       No       China (People's …
+# Load the GCDF 2.0 dataset as a tibble, with standardized country names added at the beginning.
+get_gcdf2_dataset()
+#> # A tibble: 13,427 × 73
+#>    country_name iso3c country_or_regional aid_data_tuff_project_id
+#>    <chr>        <chr> <chr>                                  <dbl>
+#>  1 Afghanistan  AFG   country                                53631
+#>  2 Afghanistan  AFG   country                                53632
+#>  3 Afghanistan  AFG   country                                53633
+#>  4 Afghanistan  AFG   country                                53634
+#>  5 Afghanistan  AFG   country                                53636
+#>  6 Afghanistan  AFG   country                                53637
+#>  7 Afghanistan  AFG   country                                53644
+#>  8 Afghanistan  AFG   country                                53999
+#>  9 Afghanistan  AFG   country                                54396
+#> 10 Afghanistan  AFG   country                                56587
 #> # ℹ 13,417 more rows
-#> # ℹ abbreviated name: ¹​recommended_for_aggregates
-#> # ℹ 66 more variables: recipient <chr>, recipient_region <chr>,
+#> # ℹ 69 more variables: recommended_for_aggregates <chr>, umbrella <chr>,
+#> #   financier_country <chr>, recipient <chr>, recipient_region <chr>,
 #> #   commitment_year <dbl>, commitment_year_estimated <chr>,
 #> #   implementation_start_year <dbl>, completion_year <dbl>, title <chr>,
 #> #   description <chr>, staff_comments <chr>, status <chr>, intent <chr>,
@@ -116,7 +127,7 @@ gcdf2_dataset
 ```
 
 `gcdf2_data_dictionary` contains AidData’s detailed data definitions for
-all 70 columns of the GCDF 2.0:
+all of the GCDF 2.0 variables:
 
 ``` r
 # Load the GCDF 2.0 data dictionary as a tibble
@@ -136,3 +147,61 @@ gcdf2_data_dictionary
 #> 10 completion_year            numeric      Completion Year           "This fiel…
 #> # ℹ 60 more rows
 ```
+
+This makes it easy to find actionable insights quickly. Let’s look at
+the growth of concessional versus non-concessional lending in the years
+covered by the dataset (2000-2017).
+
+``` r
+
+concessional_vs_non_concenssional <- get_gcdf2_dataset() |> 
+  # See `recommended_for_aggregates` in the gcdf2_data_dictionary to learn more about this. 
+  filter(recommended_for_aggregates == "Yes") |> 
+  # Group by the commitment year and whether the loand is concessional
+  group_by(commitment_year, concessional) |> 
+  # Find the sum by year and concessionality type in constant 2017 USD
+  summarize(commitments = sum(amount_constant_usd2017, na.rm = TRUE)) |> 
+  # ungroup to avoid strange side effects of grouped tibbles
+  ungroup() |> 
+  # make prettier names for a chart or table
+  mutate(label_for_chart = case_when(concessional=="Yes" ~ "Concessional",
+                                     concessional=="No" ~ "Non-Concessional",
+                                     concessional=="Vague" ~ "Unclear",
+                                     ))
+#> `summarise()` has grouped output by 'commitment_year'. You can override using
+#> the `.groups` argument.
+
+concessional_vs_non_concenssional
+#> # A tibble: 54 × 4
+#>    commitment_year concessional commitments label_for_chart 
+#>              <dbl> <chr>              <dbl> <chr>           
+#>  1            2000 No             35730163. Non-Concessional
+#>  2            2000 Vague        1515226164. Unclear         
+#>  3            2000 Yes          2068689349. Concessional    
+#>  4            2001 No            197609156. Non-Concessional
+#>  5            2001 Vague        3876972191. Unclear         
+#>  6            2001 Yes          4139903249. Concessional    
+#>  7            2002 No           1303999712. Non-Concessional
+#>  8            2002 Vague        1524781321. Unclear         
+#>  9            2002 Yes          3212037121. Concessional    
+#> 10            2003 No            659706286. Non-Concessional
+#> # ℹ 44 more rows
+```
+
+``` r
+concessional_vs_non_concenssional |> 
+  ggplot(aes(x = commitment_year, y = commitments, fill = label_for_chart)) +
+  geom_bar(stat = "identity") +
+  scale_fill_brewer("blues") +
+  theme_minimal(base_size = 14) +
+  scale_y_continuous(labels = scales::label_dollar(suffix = " bn", scale = 1/10^9, accuracy = 1)) +
+  labs(title = "Chinese Development Finance Loan Commitments",
+       subtitle = "With the chinadevfin2 R package, we can find actionable insights quickly",
+       x = "Commitment Year",
+       y = "Commitments (2017 Constant USD)",
+       fill = "",
+       caption = "Data: AidData's Global Chinese Development Finance Dataset, 2.0\nUsing the chinadevfin2 R package") +
+  theme(legend.position="top")
+```
+
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
