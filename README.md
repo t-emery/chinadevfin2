@@ -194,7 +194,7 @@ Now we can use `ggplot2` to make a data visualization:
 concessional_vs_non_concenssional |> 
   ggplot(aes(x = commitment_year, y = commitments, fill = label_for_chart)) +
   geom_bar(stat = "identity") +
-  scale_fill_brewer("blues") +
+  scale_fill_brewer(palette = "Blues") +
   theme_minimal(base_size = 14) +
   scale_y_continuous(labels = scales::label_dollar(suffix = " bn", scale = 1/10^9, accuracy = 1)) +
   labs(title = "Chinese Development Finance Loan Commitments",
