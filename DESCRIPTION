@@ -1,9 +1,9 @@
 Package: chinadevfin2
-Title: What the Package Does (One Line, Title Case)
+Title: An R Package for AidData's Global Chinese Development Finance 2.0 Dataset
 Version: 0.0.0.9000
 Authors@R: 
     person("Teal", "Emery", , "lte@tealinsights.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Description: `chinadevfin2` is a package for working with AidData's Global Chinese Development Finance 2.0 Dataset. The dataset includes 13,427 projects worth $843 billion across 165 countries. `chinadevfin2` provides an easy way for R users to load the dataset, and helper functions to ease common analysis workflows.
 License: CC0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

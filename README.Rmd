@@ -39,7 +39,7 @@ If you are unfamiliar with the dataset, the following resources are a great plac
 ### Relevant Notes
 
 1. **`chinadevfin2` is still under heavy development**: Please use accordingly. The initial phase of package development aims to finalize stable versions of the datasets, and will be announced with a new package version release and note. Further development will focus on building helper functions to aid efficient analysis workflows with the dataset. 
-2. **`chinadevfin2` is a personal project**:  While the package author works as a [consultant to AidData](https://www.linkedin.com/feed/update/urn:li:activity:7067478837885849600/) this package is a personal project with no official affiliation or sponsorship from AidData. The author build the package for his own own use, but hopes that it can grow into a robust package that can aid researchers, policymakers, and others interested in gaining actionable, empirically-based insights about Chinese development finance lending using the GCDF 2.0 dataset. 
+2. **`chinadevfin2` is a personal project**:  While the package author works as a [consultant to AidData](https://www.linkedin.com/feed/update/urn:li:activity:7067478837885849600/) this package is a personal project with no official affiliation or sponsorship from AidData. The author built the package for his own own use, but hopes that it can grow into a robust package that can aid researchers, policymakers, and others interested in gaining actionable, empirically-based insights about Chinese development finance lending using the GCDF 2.0 dataset. 
 
 
 

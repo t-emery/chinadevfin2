@@ -3,11 +3,13 @@
 \docType{data}
 \name{gcdf2_data_dictionary}
 \alias{gcdf2_data_dictionary}
-\title{Data Dictionary for the AidData Global Chinese Development Finance Dataset}
+\title{Data Dictionary for the AidData Global Chinese Development Finance 2.0 Dataset}
 \format{
-A tibble with 70 rows and 2 variables:
+A tibble with 70 rows and 4 variables:
 \describe{
-\item{field_name}{chr The name of the variable.}
+\item{column_name}{chr The name of the column in the \code{gcdf2_dataset}. It is the \code{snake_case} version of the AidData variable name shown in \code{field_name}, used because it is easier to work with in R.}
+\item{column_class}{chr The column's data type.}
+\item{field_name}{chr The name of the variable from the AidData dataset.}
 \item{description}{chr The variable's definition.}
 
 }
