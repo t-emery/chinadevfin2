@@ -100,6 +100,8 @@ concessional_vs_non_concenssional <- get_gcdf2_dataset() |>
 concessional_vs_non_concenssional
 ```
 
+Now we can use `ggplot2` to make a data visualization:
+
 ```{r}
 concessional_vs_non_concenssional |> 
   ggplot(aes(x = commitment_year, y = commitments, fill = label_for_chart)) +
@@ -108,7 +110,7 @@ concessional_vs_non_concenssional |>
   theme_minimal(base_size = 14) +
   scale_y_continuous(labels = scales::label_dollar(suffix = " bn", scale = 1/10^9, accuracy = 1)) +
   labs(title = "Chinese Development Finance Loan Commitments",
-       subtitle = "With the chinadevfin2 R package,\n we can find actionable insights quickly",
+       subtitle = "chinadevfin2: from ideas to actionable insights, quickly",
        x = "Commitment Year",
        y = "Commitments (2017 Constant USD)",
        fill = "",
