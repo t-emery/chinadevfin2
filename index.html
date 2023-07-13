@@ -118,34 +118,45 @@
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>The core initial functionality of <code>chinadevfin2</code> is to load the GCDF 2.0 dataset as a <code>tibble</code> using <code>gcdf2_dataset</code>:</p>
+<p>The core initial functionality of <code>chinadevfin2</code> is to load the GCDF 2.0 dataset as a <code>tibble</code> using <code><a href="reference/get_gcdf2_dataset.html">get_gcdf2_dataset()</a></code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># load the chinadevfin2 library</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/t-emery/chinadevfin2" class="external-link">chinadevfin2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──</span></span>
+<span><span class="co">#&gt; ✔ dplyr     1.1.2     ✔ readr     2.1.4</span></span>
+<span><span class="co">#&gt; ✔ forcats   1.0.0     ✔ stringr   1.5.0</span></span>
+<span><span class="co">#&gt; ✔ ggplot2   3.4.2     ✔ tibble    3.2.1</span></span>
+<span><span class="co">#&gt; ✔ lubridate 1.9.2     ✔ tidyr     1.3.0</span></span>
+<span><span class="co">#&gt; ✔ purrr     1.0.1     </span></span>
+<span><span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
+<span><span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span></span>
+<span><span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></span>
+<span><span class="co">#&gt; ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</span></span>
 <span></span>
-<span><span class="co"># Load the GCDF 2.0 dataset as a tibble</span></span>
-<span><span class="va">gcdf2_dataset</span></span>
-<span><span class="co">#&gt; # A tibble: 13,427 × 70</span></span>
-<span><span class="co">#&gt;    aid_data_tuff_project_id recommended_for_aggrega…¹ umbrella financier_country</span></span>
-<span><span class="co">#&gt;                       &lt;dbl&gt; &lt;chr&gt;                     &lt;chr&gt;    &lt;chr&gt;            </span></span>
-<span><span class="co">#&gt;  1                    53631 Yes                       No       China (People's …</span></span>
-<span><span class="co">#&gt;  2                    53632 Yes                       No       China (People's …</span></span>
-<span><span class="co">#&gt;  3                    53633 Yes                       No       China (People's …</span></span>
-<span><span class="co">#&gt;  4                    53634 Yes                       No       China (People's …</span></span>
-<span><span class="co">#&gt;  5                    53636 Yes                       No       China (People's …</span></span>
-<span><span class="co">#&gt;  6                    53637 Yes                       No       China (People's …</span></span>
-<span><span class="co">#&gt;  7                    53644 Yes                       No       China (People's …</span></span>
-<span><span class="co">#&gt;  8                    53999 Yes                       No       China (People's …</span></span>
-<span><span class="co">#&gt;  9                    54396 No                        No       China (People's …</span></span>
-<span><span class="co">#&gt; 10                    56587 Yes                       No       China (People's …</span></span>
+<span><span class="co"># Load the GCDF 2.0 dataset as a tibble, with standardized country names added at the beginning.</span></span>
+<span><span class="fu"><a href="reference/get_gcdf2_dataset.html">get_gcdf2_dataset</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 13,427 × 73</span></span>
+<span><span class="co">#&gt;    country_name iso3c country_or_regional aid_data_tuff_project_id</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt;                                  &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 Afghanistan  AFG   country                                53631</span></span>
+<span><span class="co">#&gt;  2 Afghanistan  AFG   country                                53632</span></span>
+<span><span class="co">#&gt;  3 Afghanistan  AFG   country                                53633</span></span>
+<span><span class="co">#&gt;  4 Afghanistan  AFG   country                                53634</span></span>
+<span><span class="co">#&gt;  5 Afghanistan  AFG   country                                53636</span></span>
+<span><span class="co">#&gt;  6 Afghanistan  AFG   country                                53637</span></span>
+<span><span class="co">#&gt;  7 Afghanistan  AFG   country                                53644</span></span>
+<span><span class="co">#&gt;  8 Afghanistan  AFG   country                                53999</span></span>
+<span><span class="co">#&gt;  9 Afghanistan  AFG   country                                54396</span></span>
+<span><span class="co">#&gt; 10 Afghanistan  AFG   country                                56587</span></span>
 <span><span class="co">#&gt; # ℹ 13,417 more rows</span></span>
-<span><span class="co">#&gt; # ℹ abbreviated name: ¹​recommended_for_aggregates</span></span>
-<span><span class="co">#&gt; # ℹ 66 more variables: recipient &lt;chr&gt;, recipient_region &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; # ℹ 69 more variables: recommended_for_aggregates &lt;chr&gt;, umbrella &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   financier_country &lt;chr&gt;, recipient &lt;chr&gt;, recipient_region &lt;chr&gt;,</span></span>
 <span><span class="co">#&gt; #   commitment_year &lt;dbl&gt;, commitment_year_estimated &lt;chr&gt;,</span></span>
 <span><span class="co">#&gt; #   implementation_start_year &lt;dbl&gt;, completion_year &lt;dbl&gt;, title &lt;chr&gt;,</span></span>
 <span><span class="co">#&gt; #   description &lt;chr&gt;, staff_comments &lt;chr&gt;, status &lt;chr&gt;, intent &lt;chr&gt;,</span></span>
 <span><span class="co">#&gt; #   flow_type &lt;chr&gt;, concessional &lt;chr&gt;, flow_class &lt;chr&gt;, sector_code &lt;dbl&gt;, …</span></span></code></pre></div>
-<p><code>gcdf2_data_dictionary</code> contains AidData’s detailed data definitions for all 70 columns of the GCDF 2.0:</p>
+<p><code>gcdf2_data_dictionary</code> contains AidData’s detailed data definitions for all of the GCDF 2.0 variables:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load the GCDF 2.0 data dictionary as a tibble</span></span>
 <span><span class="va">gcdf2_data_dictionary</span></span>
@@ -163,6 +174,56 @@
 <span><span class="co">#&gt;  9 implementation_start_year  numeric      Implementation Start Year "This fiel…</span></span>
 <span><span class="co">#&gt; 10 completion_year            numeric      Completion Year           "This fiel…</span></span>
 <span><span class="co">#&gt; # ℹ 60 more rows</span></span></code></pre></div>
+<p>This makes it easy to find actionable insights quickly. Let’s look at the growth of concessional versus non-concessional lending in the years covered by the dataset (2000-2017).</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">concessional_vs_non_concenssional</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_gcdf2_dataset.html">get_gcdf2_dataset</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># See `recommended_for_aggregates` in the gcdf2_data_dictionary to learn more about this. </span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">recommended_for_aggregates</span> <span class="op">==</span> <span class="st">"Yes"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Group by the commitment year and whether the loand is concessional</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">commitment_year</span>, <span class="va">concessional</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Find the sum by year and concessionality type in constant 2017 USD</span></span>
+<span>  <span class="fu">summarize</span><span class="op">(</span>commitments <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">amount_constant_usd2017</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># ungroup to avoid strange side effects of grouped tibbles</span></span>
+<span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># make prettier names for a chart or table</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>label_for_chart <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span><span class="va">concessional</span><span class="op">==</span><span class="st">"Yes"</span> <span class="op">~</span> <span class="st">"Concessional"</span>,</span>
+<span>                                     <span class="va">concessional</span><span class="op">==</span><span class="st">"No"</span> <span class="op">~</span> <span class="st">"Non-Concessional"</span>,</span>
+<span>                                     <span class="va">concessional</span><span class="op">==</span><span class="st">"Vague"</span> <span class="op">~</span> <span class="st">"Unclear"</span>,</span>
+<span>                                     <span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; `summarise()` has grouped output by 'commitment_year'. You can override using</span></span>
+<span><span class="co">#&gt; the `.groups` argument.</span></span>
+<span></span>
+<span><span class="va">concessional_vs_non_concenssional</span></span>
+<span><span class="co">#&gt; # A tibble: 54 × 4</span></span>
+<span><span class="co">#&gt;    commitment_year concessional commitments label_for_chart </span></span>
+<span><span class="co">#&gt;              &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;           </span></span>
+<span><span class="co">#&gt;  1            2000 No             35730163. Non-Concessional</span></span>
+<span><span class="co">#&gt;  2            2000 Vague        1515226164. Unclear         </span></span>
+<span><span class="co">#&gt;  3            2000 Yes          2068689349. Concessional    </span></span>
+<span><span class="co">#&gt;  4            2001 No            197609156. Non-Concessional</span></span>
+<span><span class="co">#&gt;  5            2001 Vague        3876972191. Unclear         </span></span>
+<span><span class="co">#&gt;  6            2001 Yes          4139903249. Concessional    </span></span>
+<span><span class="co">#&gt;  7            2002 No           1303999712. Non-Concessional</span></span>
+<span><span class="co">#&gt;  8            2002 Vague        1524781321. Unclear         </span></span>
+<span><span class="co">#&gt;  9            2002 Yes          3212037121. Concessional    </span></span>
+<span><span class="co">#&gt; 10            2003 No            659706286. Non-Concessional</span></span>
+<span><span class="co">#&gt; # ℹ 44 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">concessional_vs_non_concenssional</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">commitment_year</span>, y <span class="op">=</span> <span class="va">commitments</span>, fill <span class="op">=</span> <span class="va">label_for_chart</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_bar</span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_fill_brewer</span><span class="op">(</span><span class="st">"blues"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_minimal</span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu">label_dollar</span><span class="op">(</span>suffix <span class="op">=</span> <span class="st">" bn"</span>, scale <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">10</span><span class="op">^</span><span class="fl">9</span>, accuracy <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Chinese Development Finance Loan Commitments"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"With the chinadevfin2 R package, we can find actionable insights quickly"</span>,</span>
+<span>       x <span class="op">=</span> <span class="st">"Commitment Year"</span>,</span>
+<span>       y <span class="op">=</span> <span class="st">"Commitments (2017 Constant USD)"</span>,</span>
+<span>       fill <span class="op">=</span> <span class="st">""</span>,</span>
+<span>       caption <span class="op">=</span> <span class="st">"Data: AidData's Global Chinese Development Finance Dataset, 2.0\nUsing the chinadevfin2 R package"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>legend.position<span class="op">=</span><span class="st">"top"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-3-1.png" width="100%"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
