@@ -5,7 +5,7 @@
 \alias{gcdf2_standardized_countrynames}
 \title{Standardized Country Names}
 \format{
-A tibble with 70 rows and 4 variables:
+A tibble with 152 rows and 4 variables:
 \describe{
 \item{recipient}{chr The loan recipient listed in the \code{recipient} column of the \code{gcdf2_dataset}. See the \code{gcdf2_data_dictionary} for more details.}
 \item{country_name}{chr The standardized country name provided by \code{countrycode::countryname()}. When the project is regional, the region listed in \code{recipient} is used.}

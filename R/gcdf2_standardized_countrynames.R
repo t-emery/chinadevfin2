@@ -2,7 +2,7 @@
 #'
 #' A tibble providing standardized country names, iso3c codes, and a column to filter between country-specific and regional projects. Country names are standardized using [countrycode::countryname()](https://vincentarelbundock.github.io/countrycode/reference/countryname.html).
 #'
-#' @format A tibble with 70 rows and 4 variables:
+#' @format A tibble with 152 rows and 4 variables:
 #' \describe{
 #'   \item{recipient}{chr The loan recipient listed in the `recipient` column of the `gcdf2_dataset`. See the `gcdf2_data_dictionary` for more details.}
 #'   \item{country_name}{chr The standardized country name provided by `countrycode::countryname()`. When the project is regional, the region listed in `recipient` is used.}
