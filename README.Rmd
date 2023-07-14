@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/t-emery/chinadevfin2/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/t-emery/chinadevfin2/actions/workflows/R-CMD-check.yaml)
+[![LifeCycle](https://img.shields.io/badge/lifecycle-experimental-orange)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
 `chinadevfin2` is primarily a data package enabling an efficient method for working with [AidData's](https://www.aiddata.org/) [Global Chinese Development Finance Dataset, Version 2.0](https://www.aiddata.org/data/aiddatas-global-chinese-development-finance-dataset-version-2-0) (GCDF 2.0) in R. 

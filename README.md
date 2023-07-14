@@ -6,6 +6,7 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/t-emery/chinadevfin2/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/t-emery/chinadevfin2/actions/workflows/R-CMD-check.yaml)
+[![LifeCycle](https://img.shields.io/badge/lifecycle-experimental-orange)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
 `chinadevfin2` is primarily a data package enabling an efficient method
