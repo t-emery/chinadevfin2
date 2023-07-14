@@ -4,6 +4,8 @@
 # chinadevfin2 <a href="https://t-emery.github.io/chinadevfin2/"><img src="man/figures/logo.png" align="right" height="139" alt="chinadevfin2 website" /></a>
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/t-emery/chinadevfin2/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/t-emery/chinadevfin2/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 `chinadevfin2` is primarily a data package enabling an efficient method
