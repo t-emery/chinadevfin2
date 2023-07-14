@@ -16,6 +16,7 @@ Config/testthat/edition: 3
 Depends: 
     R (>= 2.10)
 LazyData: true
+LazyDataCompression: xz
 Imports: 
     dplyr,
     stringr,
