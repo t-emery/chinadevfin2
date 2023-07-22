@@ -11,6 +11,7 @@ RoxygenNote: 7.2.3
 URL: https://github.com/t-emery/chinadevfin2, https://t-emery.github.io/chinadevfin2/
 BugReports: https://github.com/t-emery/chinadevfin2/issues
 Suggests: 
+    reactable,
     testthat (>= 3.0.0),
     wbstats
 Config/testthat/edition: 3
