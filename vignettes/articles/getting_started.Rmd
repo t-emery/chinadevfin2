@@ -1,0 +1,167 @@
+---
+title: "Getting Started"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+    toc_depth: 3
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+options(scipen = 10)
+```
+
+# Introduction
+`chinadevfin2` is primarily a data package enabling an efficient method for working with [AidData's](https://www.aiddata.org/) [Global Chinese Development Finance Dataset, Version 2.0](https://www.aiddata.org/data/aiddatas-global-chinese-development-finance-dataset-version-2-0) (GCDF 2.0) in `R`. 
+
+`chinadevfin2`is designed to eliminate two time-consuming pain-points when working with datasets:
+
+1. **Data import & cleaning**: The `chinadevfin2` package loads the dataset, and all variables are already formatted with the correct data types. Users can begin doing meaningful analysis with just a few lines of code.  
+2. **Country name standardization**: By default, the `chinafindev2` package loads the dataset with standardized country names and iso3c codes. This allows users to easily join other data sourced elsewhere, for example about income groups, custom country grouping, or macroeconomic data, without worrying whether about whether each dataset uses different versions of a country's name (e.g. *Philippines* or *The Philippines*).    
+
+## Finding insights quickly
+
+[`get_gcdf2_dataset()`] loads the GCDF 2.0 dataset with standarized country names. Since the data is already cleaned, we can start doing interesting analysis right way.  
+
+What countries have been the largest receipients of Chinese development finance?  We can answer this by finding the sum of the commitments (in constant 2017 USD).
+
+```{r message=FALSE}
+library(chinadevfin2) # load the package
+library(dplyr) # for data analysis 
+
+# get the dataset, with standardized country names
+committments_by_country <- get_gcdf2_dataset() |> 
+  # See `recommended_for_aggregates` in the gcdf2_data_dictionary to learn more about this. 
+  filter(recommended_for_aggregates == "Yes") |>
+  # filter out regional projects 
+  filter(country_or_regional == "country") |>
+  # for each country
+  group_by(country_name, iso3c) |> 
+  # Find the sum in constant 2017 USD
+  summarize(total_commitments_bn = sum(amount_constant_usd2017, na.rm = TRUE)/10^9) |> 
+  # ungroup to avoid strange side effects of grouped tibbles
+  ungroup() |> 
+  # arrange by descending order
+  arrange(total_commitments_bn |> desc())
+
+committments_by_country
+```
+
+## Standardized country names
+
+Standardized country names makes it easy to add on data from other sources.  
+
+Here's a simple example. Above, we calculated the total commitments per country during the 2000-2017 period.  But that doesn't give us much perspective on how large those commitments are in the context of a country's economy.   
+
+One way we can do this is by looking at the size of the commitments versus a relevant denominator, like population or economy size. Here, we'll get data from the World Bank's API using the [`wbstats` R package](http://gshs-ornl.github.io/wbstats/index.html). Because AidData's commitments are displayed in constant 2017 USD, we'll get countries' 2017 USD GDP. A handful of countries, such as Venezuela, only have GDP data for earlier years, so for those we'll get the most recent non-empty value.  
+
+### Get outside data
+
+```{r}
+# load the wbstats R package to access World Bank data
+library(wbstats)
+
+# get USD GDP from 2017, to align with GCDF 2.0's reporting figures in 2017 USD.
+wb_gdp_usd_2017 <- wb_data(indicator = c("gdp_usd_2017" = "NY.GDP.MKTP.CD"),
+                           start_date = 2017,
+                           end_date = 2017) |> 
+  select(iso3c, gdp_usd_2017)
+
+# Venezuela (a large recipient of Chinese lending) only reported GDP data through 2014. This is true for a small handful of other countries such as Eritrea and South Sudan too.  For those, we will get the most recent non-empty value (`mnrev`) 
+wb_gdp_usd_mrnev <- wb_data(indicator = c("gdp_usd_mrnev" = "NY.GDP.MKTP.CD"),
+                           mrnev = 1) |> 
+  select(iso3c, gdp_usd_mrnev)
+
+# combine the datasets together to get 2017 GDP where available, but use the most recent non-empty (`mnrev`) value where 2017 data is not available. 
+wb_gdp_usd_2017_or_mrnev <- wb_gdp_usd_2017 |> 
+  left_join(wb_gdp_usd_mrnev, by = "iso3c") |> 
+  mutate(gdp_usd_2017_or_mrnev = if_else(is.na(gdp_usd_2017), 
+                                true = gdp_usd_mrnev,
+                                false = gdp_usd_2017),
+         # change the scale to billions of USD, in line with commitments
+         gdp_usd_2017_or_mrnev_bn = gdp_usd_2017_or_mrnev/10^9) |> 
+  select(iso3c, gdp_usd_2017_or_mrnev_bn)
+
+wb_gdp_usd_2017_or_mrnev
+```
+
+### Attach the data and do cool things
+Now we'll add the GDP data to our `committments_by_country` tibble we created above, and then calculate commitments as a percent of 2017 (or most recently available) GDP.   
+
+```{r}
+committments_by_country |> 
+  # join the two datasets by iso3c codes
+  left_join(wb_gdp_usd_2017_or_mrnev, by = "iso3c") |> 
+  # calculate the value of total commitments as a percentage of GDP
+  mutate(commitments_pct_gdp = total_commitments_bn/gdp_usd_2017_or_mrnev_bn * 100) |> 
+  # remove the iso3c column so the rest of the columns will be visible
+  select(-iso3c) |> 
+  # arrange the output in descending order by commitments as percent of GDP
+  arrange(commitments_pct_gdp |> desc()) 
+```
+
+This is interesting. One should have extreme humility about [GDP measurements from small & lower income countries](https://www.cornellpress.cornell.edu/book/9780801478604/poor-numbers/#bookTabs=1).  Nevertheless, this gives us useful context of how large Chinese development finance committments betwee 2000-2017 have been for many smaller and poorer countries. 
+
+
+# About the GCDF 2.0 dataset:
+
+[AidData's](https://www.aiddata.org/data/aiddatas-global-chinese-development-finance-dataset-version-2-0) summary of the dataset:
+
+> AidData’s Global Chinese Development Finance Dataset, Version 2.0. records the known universe of projects (with development, commercial, or representational intent) supported by official financial and in-kind commitments (or pledges) from China from 2000-2017, with implementation details covering a 22-year period (2000-2021). The dataset captures 13,427 projects worth $843 billion financed by more than 300 Chinese government institutions and state-owned entities across 165 countries in every major region of the world. AidData systematically collected and quality-assured all projects in the dataset using the [2.0 version of our Tracking Underreported Financial Flows (TUFF) methodology](https://www.aiddata.org/publications/aiddata-tuff-methodology-version-2-0).
+
+Please see the [AidData's](https://www.aiddata.org/data/aiddatas-global-chinese-development-finance-dataset-version-2-0) dataset website for full citation details.   
+
+If you are unfamiliar with the dataset, the following resources are a great place to start:
+
+* **AidData - Policy Report**: [Banking on the Belt and Road: Insights from a new global dataset of 13,427 Chinese development projects](https://www.aiddata.org/publications/banking-on-the-belt-and-road)
+* **AidData - Methodology**: [Tracking Underreported Financial Flows (TUFF) methodology, 2.0](https://www.aiddata.org/publications/aiddata-tuff-methodology-version-2-0).
+* **AidData - Dataset Website**: [Global Chinese Development Finance Dataset, Version 2.0](https://www.aiddata.org/data/aiddatas-global-chinese-development-finance-dataset-version-2-0) 
+
+# Exploring the GCDF 2.0 data dictionary
+
+The dataset's data dictionary, with definitions of all 70 variables, is available in the object `gcdf2_data_dictionary`. Let's use the [`reactable`](https://glin.github.io/reactable/index.html) package make a table to explore the data definitions.  
+
+Here's what you'll find in `gcdf2_data_dictionary`:
+
+* `column_name`: the name of the column in the `gcdf2_dataset`. It is the `snake_case` version of the name given to the variable by AidData that is displayed in `field name`, so that it is easier to work with in `R`.
+* `column_class`: the data type of the variable, such as `numeric`, `character`, or `Date`.
+* `field_name`: the original name of the variable given by AidData. 
+* `description`: the detailed definition of the variable.  
+
+
+Take your time. There's a lot there. 
+
+```{r}
+# load reactable library to make pretty tables
+library(reactable)
+
+gcdf2_data_dictionary |> 
+  reactable(searchable = TRUE,
+            sortable = TRUE,
+            filterable = TRUE,
+            bordered = TRUE,
+            defaultPageSize = 3,
+            columns = list(
+              column_class = colDef(minWidth = 65),
+              description = colDef(minWidth = 250)
+            )
+            )
+```
+
+# Creating Aggregates
+
+In the examples above, we found meaning in the dataset by creating aggregates. 
+
+The GCDF 2.0 dataset's `recommended_for_aggregates` variable identifies the projects that AidData recommends be used for creating data aggregates. As in the example above, use `filter(recommended_for_aggregates == "Yes")` as part of your `dplyr` pipeline if you are creating aggregates.  
+
+Here is AidData's full explanation from the data dictionary:
+
+> This field identifies projects that AidData recommends including in analysis that requires the aggregation of projects supported by official financial (or in-kind) commitments from China, including analysis of monetary amounts and project counts. It is useful for identifying formally approved, active, and completed Chinese government-financed projects -- and excluding all cancelled projects, suspended projects, and projects that never reached the formal approval (official commitment) stage. The field is set to "Yes" for all projects with a status designation of Pipeline: Commitment, Implementation, and Completion that have not also been designated as umbrella agreements. It is set to “No” for all cancelled projects, suspended projects, and projects that never reached the official commitment stage (i.e. those projects with a status designation of Pipeline: Pledge, Suspended, and Cancelled). Additionally, to avoid double-counting, the field is set to “No” for all umbrella agreements. For more information on umbrella agreements, see the description of the “Umbrella” field in this file. Also, note that not all projects with a “Recommended for Aggregates” value of “True” identify a financial transaction value (since some transactions are difficult to monetize, such as in-kind donations, technical assistance, scholarships, and training activities). 
+
+
